@@ -1,0 +1,892 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Exploring StackOverflow</title>
+    <meta name="description" content="Exploring StackOverflow with F# and R.">
+    <meta name="author" content="Evelina Gabasova">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="//code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="//code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css" id="theme">
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/style.css" />
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/deedle.css" />
+    <link type="text/css" rel="stylesheet" href="css/custom.css" />
+    <script src="fsharp.formatting/styles/tips.js" type="text/javascript"></script>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/fsreveal.css">
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script language="javascript" type="text/javascript">
+        function init()
+        {
+            websocket = new WebSocket("ws://"+window.location.host+"/websocket");
+            websocket.onmessage = function(evt) { location.reload(); };
+        }
+        window.addEventListener("load", init, false);
+    </script>
+</head>
+<body>
+    <div class="reveal">
+        <div class="tip" id="fs1">val ts : obj<br /><br />Full name: index.ts</div>
+<div class="tip" id="fs2">val box : value:&#39;T -&gt; obj<br /><br />Full name: Microsoft.FSharp.Core.Operators.box</div>
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section >
+<section class="withbackground" data-background="images/posts-background.png">
+<h1><div style="color: white" > Exploring StackOverflow </div></h1>
+<h2><div style="color: white" > Evelina Gabasova </div></h2>
+<h2><div style="color: white" > @evelgab </div></h2>
+</section>
+<section >
+<img src="images/so-logo.png" /> 
+</section>
+<section >
+<img src="images/cambridge-logo.jpg" /> 
+</section>
+<section data-background="images/cambridge2.jpg">
+</section>
+<section data-background="images/cancer-unit.jpg">
+</section>
+<section data-background="images/tcga-dna.jpg">
+</section>
+<section data-background="images/bam2.png">
+</section>
+<section >
+<p><img src="images/so-logo.png" alt="" /></p>
+<aside class="notes">
+Why analyze StackOverflow?<br/>
+Why not? The data are there<br/>
+Can we actually learn something from it?<br/>
+</aside>
+</section>
+<section data-background="#d3d3d3">
+<img src="images/copypaste.jpg" style="height: 640px" />
+</section>
+<section >
+<img src="images/so-popular-languages.png" style="height: 640px" />
+</section>
+<section >
+<img src="images/so-popular-environments.png" style="height: 640px" />
+</section>
+<section data-background="#d3d3d3">
+<p><img src="images/api.png" alt="" /></p>
+</section>
+<section data-background="#d3d3d3">
+<p><img src="images/bigquery.png" alt="" /></p>
+</section>
+<section data-background="#d3d3d3">
+<p><img src="images/archive.png" alt="" /></p>
+</section>
+<section data-background="black">
+<img src="images/files.png" style="width: 960px" />
+<aside class="notes">
+135 GB approx<br/>
+</aside>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1 style="font-size:400pt; color: white"> ? </h1>
+<aside class="notes">
+Questions are important - parallel from genomics<br/>
+</aside>
+</section>
+<section data-background="black">
+<p><img src="images/persian-cat-room-guardian.jpg" alt="" /></p>
+</section>
+<section data-background="black">
+<img src="images/dafuq.png" style="height: 640px" />
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1 style="font-size:110pt; color: white"> Questions </h1>
+</section>
+<section >
+<p><img src="images/so-structure-full.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/so-structure-tags.png" alt="" /></p>
+</section>
+<section >
+<h1>Tags</h1>
+<div class="fragment">
+<ul>
+<li>What are the most common tags?</li>
+</ul>
+</div>
+<aside class="notes">
+how to recognize technologies that people use for hobby projects<br/>
+technology: F#, xml parsing<br/>
+insights: think about your target demographics<br/>
+fun: minecraft, Krzysztof, most corporate technologies<br/>
+</aside>
+</section>
+<section data-background="images/tag-frequency.png">
+</section>
+<section >
+<h1>Tags</h1>
+<ul>
+<li>What are the most common tags?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>When do people ask questions?</li>
+</ul>
+</div>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Question: When?</h1>
+<aside class="notes">
+demo<br/>
+tags-time-full.csv<br/>
+Show csv type provider, don't run it<br/>
+Remark on distributed computing!!! Don't do serious data science on a laptop, unless you're using it to connect to a server/cluster<br/>
+</aside>
+</section>
+<section >
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "Monday"}, {"v": 1386}]}, {"c" : [{"v": "Tuesday"}, {"v": 1542}]}, {"c" : [{"v": "Wednesday"}, {"v": 1471}]}, {"c" : [{"v": "Thursday"}, {"v": 1502}]}, {"c" : [{"v": "Friday"}, {"v": 1391}]}, {"c" : [{"v": "Saturday"}, {"v": 930}]}, {"c" : [{"v": "Sunday"}, {"v": 969}]}]});
+    var options = {"hAxis":{"title":"Number of questions","viewWindowMode":"explicit","viewWindow":{"min":0}},"legend":{"position":"none"},"title":"Tag: f#","width":1000,"height":600} 
+    var chart = new google.visualization.BarChart(document.getElementById('d58646cc-a055-47d1-8d4f-d9a17025c2d1'));
+    chart.draw(data, options);
+}
+</script>
+<div id="d58646cc-a055-47d1-8d4f-d9a17025c2d1" style="width: 800px; height: 600px;"></div>
+</section>
+<section >
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "Monday"}, {"v": 147006}]}, {"c" : [{"v": "Tuesday"}, {"v": 162664}]}, {"c" : [{"v": "Wednesday"}, {"v": 166002}]}, {"c" : [{"v": "Thursday"}, {"v": 164108}]}, {"c" : [{"v": "Friday"}, {"v": 144248}]}, {"c" : [{"v": "Saturday"}, {"v": 67336}]}, {"c" : [{"v": "Sunday"}, {"v": 67208}]}]});
+    var options = {"colors":["#f68024"],"hAxis":{"title":"Number of questions","viewWindowMode":"explicit","viewWindow":{"min":0}},"legend":{"position":"none"},"title":"Tag: c#","width":1000,"height":600}  
+    var chart = new google.visualization.BarChart(document.getElementById('734e0c3a-02aa-4fdb-b5ef-8d2d1f2da484'));
+    chart.draw(data, options);
+}
+</script>
+<div id="734e0c3a-02aa-4fdb-b5ef-8d2d1f2da484" style="width: 800px; height: 600px;"></div>
+</section>
+<section data-background="#f68024">
+<img src="images/Krzysztof2.jpg" style="height: 500px; text-align:center" />
+<img src="images/Krzysztof-tweet.png" style="height: 100px; text-align:center" />
+</section>
+<section >
+<img src="images/weekend-ratio0.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio1.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio2.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio3.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio4.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio5.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio6.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio7.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio7-2.png" style="height: 600px" />
+</section>
+<section >
+<img src="images/weekend-ratio6-2.png" style="height: 600px" />
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Weekend index</h1>
+</section>
+<section >
+<h1>Most weekend</h1>
+<ol>
+<li>Minecraft : 1.19</li>
+<li>LWJGL : 1.12</li>
+<li>SFML (Simple and Fast Multimedia Library) : 1.06</li>
+<li>D : 1.04</li>
+<li>pygame : 1.03</li>
+</ol>
+</section>
+<section >
+<h1>Most weekday</h1>
+<ol>
+<li>SQL Server Reporting Services 2008, r2 : 0.11</li>
+<li>Infragistics : 0.13</li>
+<li>SQL Server Reporting Services 2008 : 0.13</li>
+<li>Axapta : 0.13</li>
+<li>DocusignAPI : 0.14</li>
+</ol>
+<aside class="notes">
+Axapta =  enterprise resource planning solution<br/>
+</aside>
+</section>
+<section >
+<h3>Most common tags</h3>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "Javascript"}, {"v": 0.518497878359265}]}, {"c" : [{"v": "Java"}, {"v": 0.555125629697412}]}, {"c" : [{"v": "C#"}, {"v": 0.429015290270245}]}, {"c" : [{"v": "PHP"}, {"v": 0.604675088961483}]}, {"c" : [{"v": "Android"}, {"v": 0.568765387056324}]}, {"c" : [{"v": "jQuery"}, {"v": 0.495770103573165}]}, {"c" : [{"v": "Python"}, {"v": 0.606629300657529}]}, {"c" : [{"v": "HTML"}, {"v": 0.563124671856233}]}]});
+    var options = {"colors":["#f68024"],"hAxis":{"title":"Number of questions","viewWindowMode":"explicit","viewWindow":{"min":0}},"legend":{"position":"none"},"width":1000,"height":600}  
+    var chart = new google.visualization.BarChart(document.getElementById('af330988-5e35-4700-a383-56b4ab9138aa'));
+    chart.draw(data, options);
+}
+</script>
+<div id="af330988-5e35-4700-a383-56b4ab9138aa" style="width: 800px; height: 600px;"></div>
+</section>
+<section >
+<h3>Continuous integration</h3>
+<p><img src="images/travis-vs-jenkins.png" alt="" /></p>
+</section>
+<section >
+<h3>Continuous integration</h3>
+<div class="fragment">
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "Travis-CI"}, {"v": 0.5944625407}]}, {"c" : [{"v": "Jenkins"}, {"v": 0.2083646193}]}]});
+    var options = {"hAxis":{"title":"Weekend ratio","viewWindowMode":"explicit","viewWindow":{"min":0}},"legend":{"position":"none"},"width":1000,"height":400}  
+    var chart = new google.visualization.BarChart(document.getElementById('8c94b49e-d814-44db-acbd-8d057057761c'));
+    chart.draw(data, options);
+}
+</script>
+<div id="8c94b49e-d814-44db-acbd-8d057057761c" style="width: 800px; height: 400px;"></div>
+</div>
+</section>
+<section >
+<img src="images/travis-ci.jpg" style="height: 200px"/> 
+<img src="images/jenkins.png" style="height: 200px"/>  
+<aside class="notes">
+Do you want people to use your product in their free time?  Make it easy for them<br/>
+But targeting enterprise is a valid goal as well<br/>
+</aside>
+</section>
+<section >
+<h2>Jupyter notebooks</h2>
+<p><a href="https://notebooks.azure.com/evelina">notebooks.azure.com/evelina</a></p>
+</section>
+</section>
+<section >
+<section class="withbackground" data-background="images/posts-background.png">
+<h1 style="font-size:200pt"> ? </h1>
+</section>
+<section >
+<p><img src="images/profile1.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/profile2.png" alt="" /></p>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Question: Where?</h1>
+<aside class="notes">
+Are there local pockets for some of the languages?<br/>
+Where is each technology used?<br/>
+technology: type providers for JSON & Bing, HTML & Wikipedia, charting<br/>
+insights: technology countries, where are programmers concentrated<br/>
+</aside>
+</section>
+<section >
+<h1>Where?</h1>
+<ul>
+<li>5 277 833 users in total</li>
+<li>769 541 filled in their location</li>
+</ul>
+</section>
+<section data-background="black">
+<h3>$HOME</h3>
+</section>
+<section data-background="black">
+<h1>83%</h1>
+</section>
+<section data-background="black">
+<h3>(Unfortunately) Germany</h3>
+</section>
+<section data-background="black">
+<h3>7151 Mawson Station, Australian Antarctic Territory, Antarctica</h3>
+</section>
+<section data-background="images/antarctica.jpg">
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Where?</h1>
+<aside class="notes">
+demo: JSON type provider + Bing map API<br/>
+</aside>
+</section>
+<section >
+<h3>F#</h3>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["geochart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "United States"}, {"v": 988}]}, {"c" : [{"v": "Australia"}, {"v": 117}]}, {"c" : [{"v": "Norway"}, {"v": 38}]}, {"c" : [{"v": "United Kingdom"}, {"v": 385}]}, {"c" : [{"v": "Poland"}, {"v": 51}]}, {"c" : [{"v": "New Zealand"}, {"v": 26}]}, {"c" : [{"v": "Netherlands"}, {"v": 67}]}, {"c" : [{"v": "Russia"}, {"v": 74}]}, {"c" : [{"v": "Canada"}, {"v": 112}]}, {"c" : [{"v": "India"}, {"v": 60}]}, {"c" : [{"v": "Brazil"}, {"v": 29}]}, {"c" : [{"v": "Sweden"}, {"v": 77}]}, {"c" : [{"v": "Switzerland"}, {"v": 31}]}, {"c" : [{"v": "Ireland"}, {"v": 25}]}, {"c" : [{"v": "Germany"}, {"v": 131}]}, {"c" : [{"v": "Israel"}, {"v": 30}]}, {"c" : [{"v": "Denmark"}, {"v": 59}]}, {"c" : [{"v": "Belgium"}, {"v": 17}]}, {"c" : [{"v": "France"}, {"v": 61}]}, {"c" : [{"v": "Spain"}, {"v": 19}]}, {"c" : [{"v": "Turkey"}, {"v": 7}]}, {"c" : [{"v": "Guatemala"}, {"v": 1}]}, {"c" : [{"v": "Austria"}, {"v": 21}]}, {"c" : [{"v": "Italy"}, {"v": 43}]}, {"c" : [{"v": "South Africa"}, {"v": 20}]}, {"c" : [{"v": "Colombia"}, {"v": 4}]}, {"c" : [{"v": "China"}, {"v": 22}]}, {"c" : [{"v": "Japan"}, {"v": 13}]}, {"c" : [{"v": "Czech Republic"}, {"v": 33}]}, {"c" : [{"v": "Finland"}, {"v": 11}]}, {"c" : [{"v": "Saint Lucia"}, {"v": 1}]}, {"c" : [{"v": "South Korea"}, {"v": 1}]}, {"c" : [{"v": "Mexico"}, {"v": 6}]}, {"c" : [{"v": "Macedonia"}, {"v": 1}]}, {"c" : [{"v": "Oman"}, {"v": 12}]}, {"c" : [{"v": "Greece"}, {"v": 9}]}, {"c" : [{"v": "Madagascar"}, {"v": 1}]}, {"c" : [{"v": "Ukraine"}, {"v": 38}]}, {"c" : [{"v": "Malaysia"}, {"v": 2}]}, {"c" : [{"v": "Uruguay"}, {"v": 1}]}, {"c" : [{"v": "Georgia"}, {"v": 2}]}, {"c" : [{"v": "Philippines"}, {"v": 3}]}, {"c" : [{"v": "Indonesia"}, {"v": 5}]}, {"c" : [{"v": "Trinidad and Tobago"}, {"v": 1}]}, {"c" : [{"v": "Egypt"}, {"v": 3}]}, {"c" : [{"v": "Portugal"}, {"v": 5}]}, {"c" : [{"v": "Argentina"}, {"v": 7}]}, {"c" : [{"v": "Bulgaria"}, {"v": 6}]}, {"c" : [{"v": "Bosnia and Herzegovina"}, {"v": 1}]}, {"c" : [{"v": "Singapore"}, {"v": 14}]}, {"c" : [{"v": "Malta"}, {"v": 1}]}, {"c" : [{"v": "Iran"}, {"v": 7}]}, {"c" : [{"v": "Slovakia"}, {"v": 2}]}, {"c" : [{"v": "Sri Lanka"}, {"v": 2}]}, {"c" : [{"v": "Lithuania"}, {"v": 6}]}, {"c" : [{"v": "Estonia"}, {"v": 8}]}, {"c" : [{"v": "Paraguay"}, {"v": 1}]}, {"c" : [{"v": "Hungary"}, {"v": 8}]}, {"c" : [{"v": "Peru"}, {"v": 5}]}, {"c" : [{"v": "Moldova"}, {"v": 1}]}, {"c" : [{"v": "Botswana"}, {"v": 1}]}, {"c" : [{"v": "Dominica"}, {"v": 1}]}, {"c" : [{"v": "Slovenia"}, {"v": 8}]}, {"c" : [{"v": "Pakistan"}, {"v": 5}]}, {"c" : [{"v": "Kazakhstan"}, {"v": 1}]}, {"c" : [{"v": "El Salvador"}, {"v": 3}]}, {"c" : [{"v": "Jamaica"}, {"v": 1}]}, {"c" : [{"v": "Ecuador"}, {"v": 1}]}, {"c" : [{"v": "Belarus"}, {"v": 9}]}, {"c" : [{"v": "Serbia"}, {"v": 4}]}, {"c" : [{"v": "Croatia"}, {"v": 3}]}, {"c" : [{"v": "Uganda"}, {"v": 1}]}, {"c" : [{"v": "Chile"}, {"v": 2}]}, {"c" : [{"v": "Cuba"}, {"v": 4}]}, {"c" : [{"v": "Bhutan"}, {"v": 1}]}, {"c" : [{"v": "Cyprus"}, {"v": 1}]}, {"c" : [{"v": "United Arab Emirates"}, {"v": 2}]}, {"c" : [{"v": "Vietnam"}, {"v": 3}]}, {"c" : [{"v": "Mauritius"}, {"v": 1}]}, {"c" : [{"v": "Saudi Arabia"}, {"v": 1}]}, {"c" : [{"v": "Thailand"}, {"v": 2}]}, {"c" : [{"v": "Latvia"}, {"v": 1}]}, {"c" : [{"v": "Puerto Rico"}, {"v": 3}]}, {"c" : [{"v": "Bangladesh"}, {"v": 1}]}, {"c" : [{"v": "Niger"}, {"v": 1}]}, {"c" : [{"v": "San Marino"}, {"v": 1}]}, {"c" : [{"v": "Palestine"}, {"v": 1}]}, {"c" : [{"v": "Tunisia"}, {"v": 1}]}, {"c" : [{"v": "Kyrgyzstan"}, {"v": 1}]}, {"c" : [{"v": "Azerbaijan"}, {"v": 1}]}, {"c" : [{"v": "Venezuela"}, {"v": 1}]}, {"c" : [{"v": "Bermuda"}, {"v": 1}]}, {"c" : [{"v": "Republic of Korea"}, {"v": 1}]}, {"c" : [{"v": "Antarctica"}, {"v": 1}]}, {"c" : [{"v": "Marshall Islands"}, {"v": 1}]}]});
+    var options = {"legend":{"position":"none"},"width":1000,"height":600} 
+    var chart = new google.visualization.GeoChart(document.getElementById('136d914f-d0ec-49c5-bfae-5125460bff38'));
+    chart.draw(data, options);
+}
+</script>
+<div id="136d914f-d0ec-49c5-bfae-5125460bff38" style="width: 800px; height: 600px;"></div>
+</section>
+<section >
+<p><span class="math">\[n \times \frac{1}{\text{population}} \times \frac{\text{registered}}{\text{located}}  \times 1,000,000\]</span></p>
+<br />
+<br />
+<div class="fragment"> 
+<h3>ppm (Programmers-per-million)</h3>
+</div>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Where really?</h1>
+<aside class="notes">
+we need population<br/>
+demo: HTML type provider<br/>
+</aside>
+</section>
+<section >
+<h4>F#</h4>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["geochart"]})
+    google.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = new google.visualization.DataTable({"cols": [{"type": "string" ,"id": "Column 1" ,"label": "Column 1" }, {"type": "number" ,"id": "Column 2" ,"label": "Column 2" }], "rows" : [{"c" : [{"v": "United States"}, {"v": 21.1441649612187}]}, {"c" : [{"v": "Australia"}, {"v": 33.5895256401621}]}, {"c" : [{"v": "Norway"}, {"v": 50.3885226982056}]}, {"c" : [{"v": "United Kingdom"}, {"v": 41.0609702691429}]}, {"c" : [{"v": "Poland"}, {"v": 9.21370207660584}]}, {"c" : [{"v": "New Zealand"}, {"v": 38.2940917317782}]}, {"c" : [{"v": "Netherlands"}, {"v": 27.2895993705161}]}, {"c" : [{"v": "Russia"}, {"v": 3.50390962731898}]}, {"c" : [{"v": "Canada"}, {"v": 21.2922413531757}]}, {"c" : [{"v": "India"}, {"v": 0.313034807609634}]}, {"c" : [{"v": "Brazil"}, {"v": 0.974474222519289}]}, {"c" : [{"v": "Sweden"}, {"v": 53.8960153684717}]}, {"c" : [{"v": "Switzerland"}, {"v": 25.8064642993965}]}, {"c" : [{"v": "Ireland"}, {"v": 36.4866453176332}]}, {"c" : [{"v": "Germany"}, {"v": 11.069909152792}]}, {"c" : [{"v": "Israel"}, {"v": 24.2741968485698}]}, {"c" : [{"v": "Denmark"}, {"v": 81.9457102597392}]}, {"c" : [{"v": "Belgium"}, {"v": 10.4248090891128}]}, {"c" : [{"v": "France"}, {"v": 6.34725338483007}]}, {"c" : [{"v": "Spain"}, {"v": 2.8411379457247}]}, {"c" : [{"v": "Turkey"}, {"v": 0.617316339027548}]}, {"c" : [{"v": "Guatemala"}, {"v": 0.429280799661604}]}, {"c" : [{"v": "Austria"}, {"v": 16.6815705617765}]}, {"c" : [{"v": "Italy"}, {"v": 4.92200989513662}]}, {"c" : [{"v": "South Africa"}, {"v": 2.49547075908887}]}, {"c" : [{"v": "Colombia"}, {"v": 0.568768047380725}]}, {"c" : [{"v": "China"}, {"v": 20.7944073955373}]}, {"c" : [{"v": "Japan"}, {"v": 0.710813724612141}]}, {"c" : [{"v": "Czech Republic"}, {"v": 21.7033563800386}]}, {"c" : [{"v": "Finland"}, {"v": 13.8987443946405}]}, {"c" : [{"v": "Saint Lucia"}, {"v": 37.3338887616799}]}, {"c" : [{"v": "South Korea"}, {"v": 0.137189030091987}]}, {"c" : [{"v": "Mexico"}, {"v": 0.323905558943612}]}, {"c" : [{"v": "Macedonia"}, {"v": 3.35256943281996}]}, {"c" : [{"v": "Oman"}, {"v": 18.5309511105928}]}, {"c" : [{"v": "Greece"}, {"v": 5.75583221422658}]}, {"c" : [{"v": "Madagascar"}, {"v": 0.309529774019991}]}, {"c" : [{"v": "Ukraine"}, {"v": 6.18582690419955}]}, {"c" : [{"v": "Malaysia"}, {"v": 0.437327411888557}]}, {"c" : [{"v": "Uruguay"}, {"v": 1.995304698859}]}, {"c" : [{"v": "Georgia"}, {"v": 3.7329874796648}]}, {"c" : [{"v": "Philippines"}, {"v": 0.202233838415483}]}, {"c" : [{"v": "Indonesia"}, {"v": 0.133242702070996}]}, {"c" : [{"v": "Trinidad and Tobago"}, {"v": 5.14504934155792}]}, {"c" : [{"v": "Egypt"}, {"v": 0.227474147792854}]}, {"c" : [{"v": "Portugal"}, {"v": 3.35745175411309}]}, {"c" : [{"v": "Argentina"}, {"v": 1.11512450373723}]}, {"c" : [{"v": "Bulgaria"}, {"v": 5.82413724792847}]}, {"c" : [{"v": "Bosnia and Herzegovina"}, {"v": 1.96652241082105}]}, {"c" : [{"v": "Singapore"}, {"v": 17.564127612541}]}, {"c" : [{"v": "Malta"}, {"v": 16.1737518392535}]}, {"c" : [{"v": "Iran"}, {"v": 0.611166794297645}]}, {"c" : [{"v": "Slovakia"}, {"v": 2.55944740851418}]}, {"c" : [{"v": "Sri Lanka"}, {"v": 0.662415654838544}]}, {"c" : [{"v": "Lithuania"}, {"v": 14.5328093793667}]}, {"c" : [{"v": "Estonia"}, {"v": 42.2151903708514}]}, {"c" : [{"v": "Paraguay"}, {"v": 1.01306686691447}]}, {"c" : [{"v": "Hungary"}, {"v": 5.65538292551966}]}, {"c" : [{"v": "Peru"}, {"v": 1.10263416871329}]}, {"c" : [{"v": "Moldova"}, {"v": 1.95437879870323}]}, {"c" : [{"v": "Botswana"}, {"v": 3.11268445302353}]}, {"c" : [{"v": "Dominica"}, {"v": 81.9457102597392}]}, {"c" : [{"v": "Slovenia"}, {"v": 26.9233339410991}]}, {"c" : [{"v": "Pakistan"}, {"v": 0.178740477775467}]}, {"c" : [{"v": "Kazakhstan"}, {"v": 0.391146571303903}]}, {"c" : [{"v": "El Salvador"}, {"v": 3.19480880875329}]}, {"c" : [{"v": "Jamaica"}, {"v": 2.54993610921395}]}, {"c" : [{"v": "Ecuador"}, {"v": 0.417987076041062}]}, {"c" : [{"v": "Belarus"}, {"v": 6.57862418811075}]}, {"c" : [{"v": "Serbia"}, {"v": 3.92523361387584}]}, {"c" : [{"v": "Croatia"}, {"v": 4.97111795969029}]}, {"c" : [{"v": "Uganda"}, {"v": 0.188386188917079}]}, {"c" : [{"v": "Chile"}, {"v": 0.763428043214008}]}, {"c" : [{"v": "Cuba"}, {"v": 2.47143014084609}]}, {"c" : [{"v": "Bhutan"}, {"v": 8.92523849937978}]}, {"c" : [{"v": "Cyprus"}, {"v": 8.198469078716}]}, {"c" : [{"v": "United Arab Emirates"}, {"v": 1.40911187290431}]}, {"c" : [{"v": "Vietnam"}, {"v": 0.224728262448947}]}, {"c" : [{"v": "Mauritius"}, {"v": 5.49862917165655}]}, {"c" : [{"v": "Saudi Arabia"}, {"v": 0.223887784806559}]}, {"c" : [{"v": "Thailand"}, {"v": 0.211294647909894}]}, {"c" : [{"v": "Latvia"}, {"v": 3.54508030920587}]}, {"c" : [{"v": "Bangladesh"}, {"v": 0.0431093878835645}]}, {"c" : [{"v": "Niger"}, {"v": 0.335221014225076}]}, {"c" : [{"v": "San Marino"}, {"v": 81.9457102597392}]}, {"c" : [{"v": "Palestine"}, {"v": 1.4417313369622}]}, {"c" : [{"v": "Tunisia"}, {"v": 0.622543866964826}]}, {"c" : [{"v": "Kyrgyzstan"}, {"v": 1.14820319945641}]}, {"c" : [{"v": "Azerbaijan"}, {"v": 0.711814187860433}]}, {"c" : [{"v": "Venezuela"}, {"v": 0.223796140659211}]}, {"c" : [{"v": "South Korea"}, {"v": 0.137189030091987}]}, {"c" : [{"v": "Marshall Islands"}, {"v": 81.9457102597392}]}]});
+    var options = {"legend":{"position":"none"},"width":1000,"height":600} 
+    var chart = new google.visualization.GeoChart(document.getElementById('2f1227d9-f924-4eed-ad93-6fe640abde4c'));
+    chart.draw(data, options);
+}
+</script>
+<div id="2f1227d9-f924-4eed-ad93-6fe640abde4c" style="width: 800px; height: 600px;"></div>
+</section>
+<section data-background="images/dominican-republic.jpg">
+</section>
+<section data-background="#121412">
+<h2>(Sampling bias)</h2>
+<img src="images/skull.jpg" style="width: 200px" />
+<aside class="notes">
+only registered users<br/>
+only active users<br/>
+and out of them, only the ones that gave out their address<br/>
+</aside>
+</section>
+</section>
+<section >
+<section >
+<h1>Tags + Users</h1>
+<div class="fragment">
+<h1>=</h1>
+<h1>Communities</h1>
+</div>
+<aside class="notes">
+Users ask questions with specific tags & answer questions with specific tags<br/>
+No-one knows everything<br/>
+</aside>
+<aside class="notes">
+how to define relation between tags through posts & users, similar users - similar tags<br/>
+memory vs. distributed computing<br/>
+t-SNE visualization - how to create a meaningful visualization<br/>
+Networks<br/>
+technology: RProvider, Fable<br/>
+</aside>
+</section>
+<section >
+<h1>Tags</h1>
+<h3>define</h3>
+<h1>relations</h1>
+</section>
+<section >
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><p>F#</p></th>
+<th><p>C#</p></th>
+<th><p>JS</p></th>
+<th><p>R</p></th>
+<th><p>Cobol</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p>Evelina</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="even">
+<td><p>Krzysztof</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section >
+<h3>44 265 tags x  5 277 831 users</h3>
+</section>
+<section >
+<h4>Users with more than 1,000 posts</h4>
+<h4>Tags with more than 5,000 posts</h4>
+<div class="fragment">
+<h2>807 tags, 1633 power users</h2>
+</div>
+</section>
+<section >
+<h1>t-SNE</h1>
+<h2>t-distributed Stochastic Neighbourhood embedding</h2>
+</section>
+<section >
+<h1>Embedding</h1>
+</section>
+<section >
+<img src="images/tsne-explanation0.png" />
+</section>
+<section >
+<img src="images/tsne-explanation1.png" />
+</section>
+<section >
+<img src="images/tsne-explanation2.png" />
+</section>
+<section >
+<img src="images/tsne-explanation3.png" />
+</section>
+<section >
+<img src="images/tsne-explanation4.png" />
+</section>
+<section >
+<img src="images/tsne-explanation5.png" />
+</section>
+<section >
+<h1>t-SNE in R</h1>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="R">library(tsne)
+
+ts &lt;- tsne(m, perplexity=20)
+
+plot(ts)
+</code></pre></td></tr></table>
+</section>
+<section >
+<h1>t-SNE in F#</h1>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">RProvider</span>
+<span class="k">open</span> <span class="i">RProvider</span><span class="o">.</span><span class="i">tsne</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">ts</span> <span class="o">=</span> <span class="i">R</span><span class="o">.</span><span class="i">tsne</span>(<span class="i">namedParams</span>[ <span class="s">&quot;X&quot;</span>, <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">box</span> <span class="i">m</span>; <span class="s">&quot;perplexity&quot;</span>, <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">box</span> <span class="n">20</span>])
+
+<span class="i">R</span><span class="o">.</span><span class="i">plot</span>(<span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">ts</span>)
+</code></pre></td>
+</tr>
+</table>
+</section>
+<section data-background="images/rplot.png">
+</section>
+<section >
+<p><em>The best thing about R is that it was written by statisticians.</em>
+<div class="fragment">
+<em>The worst thing about R is that it was written by statisticians.</em>
+</div>
+<br /></p>
+<p>Bow Cowgill, 2009</p>
+</section>
+<section >
+<h2>fable.io</h2>
+<p><img src="images/fable.png" alt="" /></p>
+</section>
+<section data-background="images/tsne-full.png">
+</section>
+<section >
+<img src="images/tsne-example1.png" style="height: 640px" />
+</section>
+<section >
+<img src="images/tsne-example2.png" style="height: 640px" />
+</section>
+<section >
+<img src="images/tsne-example3.png" style="width: 960px" />
+</section>
+<section >
+<img src="images/hapmap-tsne.png" style="height: 550px" />
+<p>Platzer, A. (2013). Visualization of SNPs with t-SNE. PLoS ONE, 8(2), e56883.</p>
+</section>
+<section >
+<h1>Quantifying Communities</h1>
+<aside class="notes">
+image showing how we can define a network using user data<br/>
+</aside>
+</section>
+<section >
+<p><img src="images/network-basic.png" alt="Network" /></p>
+</section>
+<section >
+<p><img src="images/network-tags.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/network-links.png" alt="" /></p>
+</section>
+<section >
+<h1>No overlap</h1>
+<h3>iOS  - R</h3>
+<h3>Django - middleware</h3>
+<aside class="notes">
+So that when someone comes and says: I want someone to write a statistics app for iphone - now you know that one person knowing both is very rare to find<br/>
+Or they are avoidint StackOverflow<br/>
+</aside>
+</section>
+<section >
+<h1>Most Central</h1>
+<h3>Based on number of connections</h3>
+<ol>
+<li>arrays</li>
+<li>string</li>
+<li>performance</li>
+</ol>
+</section>
+<section >
+<h1>Communities</h1>
+<h3>Clustering of nodes in a network</h3>
+<aside class="notes">
+idea of algorithms<br/>
+</aside>
+</section>
+<section >
+<p><img src="images/clusters1.png" alt="" /></p>
+<p>(depending on algorithm used)</p>
+</section>
+<section >
+<p><img src="images/clusters2.png" alt="" /></p>
+<p>(depending on algorithm used)</p>
+</section>
+<section >
+<p><img src="images/clusters3.png" alt="" /></p>
+<p>(depending on algorithm used)</p>
+</section>
+</section>
+<section >
+<section >
+<h2>✔ Tags</h2>
+<h2>✔ Users</h2>
+<h2>✔ Technologies</h2>
+<br />
+<div class="fragment">
+<h1>Questions and Answers</h1>
+</div>
+</section>
+<section >
+<h1>Word2vec</h1>
+<p>word embeddings</p>
+</section>
+<section >
+<h1>t-SNE</h1>
+<h3>Point + local neighbourhood</h3>
+<h1>⬇</h1>
+<h3>2D embedding</h3>
+</section>
+<section >
+<h1>Word2vec</h1>
+<h3>Word + local context</h3>
+<h1>⬇</h1>
+<h3>vector-space embedding</h3>
+</section>
+<section >
+<p><img src="images/word2vec-cbow.png" alt="" /></p>
+<div style="font-size: 0.5em"> (image source: blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/) </div>
+</section>
+<section >
+<h2>Vector-space embedding</h2>
+<p><img src="images/king-queen.png" alt="" /></p>
+</section>
+<section >
+<h1>Word2vec</h1>
+<br/>
+<p><strong>F#</strong> is a functional language on the <strong>.NET platform</strong>. <br/><br/>
+<strong>Scala</strong> is a functional/object oriented language on the <strong>JVM</strong>.</p>
+</section>
+<section >
+<h2>Scala - JVM + .NET</h2>
+<h1>=</h1>
+<div class="fragment"> 
+<h2>C#, F#</h2>
+</div>
+</section>
+<section >
+<h2>F# - .NET</h2>
+<h1>=</h1>
+<div class="fragment"> 
+<h2>SML, OCaml, GHCi, Haskell, Idris</h2>
+</div>
+</section>
+<section >
+<p><img src="images/word2vec-paper3.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/word2vec-paper2.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/word2vec-paper1.png" alt="" /></p>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<div class="fragment">
+<h2>Is</h2>
+<h1>StackOverflow</h1>
+<h2>a meritocracy?</h2>
+</div>
+<aside class="notes">
+now a provocative question<br/>
+How would we recognize meritocracy? Well, if you come and give a good answer, then you get higher score and reputation for your answer<br/>
+So I'll look at how good is author's reputation and other author properties related to the score of the question he answered<br/>
+</aside>
+</section>
+<section >
+<img src="images/reputation-score.png" style="width: 960px"/>
+</section>
+<section >
+<img src="images/reputation-score-log.png" style="width: 960px"/>
+</section>
+<section >
+<h1>Regression</h1>
+<h3>input data</h3>
+<h1>⬇</h1>
+<h3>score</h3>
+</section>
+<section >
+<h1>Input data</h1>
+<p>18,100,293 rows</p>
+<div style="font-size:20pt" />
+"Accepted" 
+"Question Score" 
+"Number of tags" 
+"Answer Count"           
+"Comment Count"           
+"Question Favourite Count"
+"Question View Count"     
+"Author Reputation"      
+"Author Profile Views"    
+"Author Up Votes"        
+"Author Down Votes"       
+"Gold Badges"            
+"Silver Badges"           
+"Bronze Badges"          
+"Author Number of Tags"   
+"Time to Answer"        
+</div>
+<h1>⬇</h1>
+<p>"Score"</p>
+<div class="fragment">
+linear regression, nonlinear regression, random forests, SVMs, neural networks
+</section>
+<section >
+<h1>Most predictive</h1>
+<div class="fragment">
+<ul>
+<li>Question favourites</li>
+<li>Question view count</li>
+<li>Accepted</li>
+</ul>
+</div>
+</section>
+<section data-background="images/chucknorrisapproves.gif">
+</section>
+<section >
+<p><img src="images/leverage.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/lever.png" alt="" /></p>
+</section>
+<section >
+<img src="images/leverage-illustration.png" style="width: 600px" />
+<aside class="notes">
+The 'Jon Skeet' effect<br/>
+The reputation is not really important, unless you are Jon Skeet<br/>
+</aside>
+</section>
+<section >
+<p><img src="images/leverage.png" alt="" /></p>
+</section>
+<section >
+<p><img src="images/jonskeet.png" alt="" /></p>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Quality matters</h1>
+<div class="fragment">
+<h2>... unless you are Jon Skeet</h2>
+</div>
+</section>
+</section>
+<section >
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Technological side of things</h1>
+<aside class="notes">
+Data science is about a lot of things - from preprocessing the data, through mathematical models, to visualization<br/>
+No single tool - but type providers are a great thing that basically make external data sources a part of your IDE<br/>
+</aside>
+<h2>Tool for the job</h2>
+</section>
+<section class="withbackground" data-background="images/posts-background.png">
+<h1>Data science side of things</h1>
+<h2>Questions</h2>
+<aside class="notes">
+think about your demographics - who are you targetting with your product<br/>
+if you're doing .NET - there's a world out there! And if you're doing JavaScript - it's not the only thing in the world!<br/>
+help people on StackOverflow - what matters is that answers are helpful, not who they come from (unless...)<br/>
+and if you want to do digital nomad thing - you can gather data where you can find likely minded people<br/>
+Sampling bias!!!<br/>
+</aside>
+</section>
+<section class="withbackground" data-background="images/beach.jpg">
+<table>
+<tr>
+  <td class="noborder" style="width:60%;"></td>
+   <td class="noborder" style="width:40%;">
+<p><h2> <div style="color: white; font-size:72pt" > Evelina Gabasova </div> </h2>
+<h2 >
+@evelgab </h2>
+<h2>evelinag.com</h2><br />
+<br /><br /><br/><br/><br/><br/>
+</td>
+</tr>
+</table></p>
+</section>
+</section>
+<section >
+<section >
+<h1>F# Software foundation</h1>
+<p><img src="images/fsharp256.png" alt="" />
+<a href="http://fsharp.org" style="color: #ff8c00; font-size: 2.5em"> fsharp.org </a></p>
+<aside class="notes">
+Board of trustees<br/>
+What is the role<br/>
+</aside>
+</section>
+<section >
+<h1>Board of trustees</h1>
+<ul>
+<li>Mentorship program</li>
+<li>Support for user groups and speakers</li>
+<li>Affiliated user groups</li>
+<li>Discussions about supporting the community</li>
+</ul>
+<aside class="notes">
+Some of these are perhaps not as visible as they should be<br/>
+</aside>
+</section>
+<section >
+<img src="images/board.png" style="height: 600px" />
+</section>
+<section >
+<h1>Board elections</h1>
+<table>
+  <tr>
+   <td class="noborder">Nominations start</td>
+   <td class="noborder">6 April</td>
+  </tr>
+  <tr>
+   <td class="noborder">Campaign start</td>
+   <td class="noborder">25 April</td>
+  </tr>
+  <tr>
+   <td class="noborder">Voting start</td>
+   <td class="noborder">9 May</td>
+  </tr>
+  <tr>
+   <td class="noborder">Voting end</td>
+   <td class="noborder">15 May</td>
+  </tr>
+</table>
+<aside class="notes">
+Candidate profile<br/>
+Who to nominate, who to vote for. It's not for people who want to change something in the compiler <br/>
+or propose new features for the language. <br/>
+How does the board work.<br/>
+It's the third year the board existed, which also means that we're still partly figuring out what<br/>
+the role of the board should be. <br/>
+Some of the actual work is done through working groups - thank people who are already engaged in some of them<br/>
+</aside>
+</section>
+<section >
+<h1><div style="color: #ff8c00; font-size: 2.5em">☑</div> Vote</h1>
+<aside class="notes">
+Vote because elections actually matter<br/>
+Nominate your F# heroes<br/>
+</section>
+</section>
+
+
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+        // Add the nohighlight class and data-noescape attribute to code elements that have already been formatted by FSharp.Formatting
+        $('pre.highlighted code').addClass('nohighlight').attr('data-noescape', '');
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'none', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function () { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function () { return !!document.body.classList; } }
+            ]
+        });
+
+    </script>
+</body>
+</html>
+
